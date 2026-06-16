@@ -1,0 +1,54 @@
+import json
+import urllib.request
+import urllib.error
+
+url = "http://10.152.98.158:8000/v1/chat/completions"
+
+data = {
+    "model": "Qwen3.6-35B-A3B",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Merhaba. 1+1 kaç? Sadece kısa cevap ver."
+        }
+    ],
+    "max_tokens": 100,
+    "stream": False
+}
+
+body = json.dumps(data).encode("utf-8")
+
+req = urllib.request.Request(
+    url,
+    data=body,
+    headers={"Content-Type": "application/json"},
+    method="POST"
+)
+
+try:
+    with urllib.request.urlopen(req) as response:
+        result = response.read().decode("utf-8")
+
+    resp = json.loads(result)
+
+    choice = resp["choices"][0]
+    message = choice.get("message", {})
+
+    content = message.get("content")
+    reasoning = choice.get("reasoning")
+
+    print("=== CONTENT ===")
+    print(content)
+
+    print("\n=== REASONING ===")
+    print(reasoning)
+
+    print("\n=== RAW JSON ===")
+    print(json.dumps(resp, indent=2, ensure_ascii=False))
+
+except urllib.error.HTTPError as e:
+    print("HTTP ERROR:", e.code)
+    print(e.read().decode("utf-8"))
+
+except Exception as e:
+    print("ERROR:", str(e))
