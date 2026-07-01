@@ -1,1 +1,20 @@
+python3-pip
+python3-venv
+ffmpeg
+portaudio19-dev
+libportaudio2
 
+faster-whisper
+sounddevice
+soundfile
+numpy
+ctranslate2
+
+
+Python 3.11 kurulumu rica ediyorum.
+Ek olarak python3.11-venv/pip desteği gerekli.
+
+FFmpeg zorunlu değil; ama kurulacaksa FFmpeg 5.x veya 6.x yeterli.
+
+GPU ile faster-whisper çalıştıracağım için NVIDIA driver’ın CUDA 12.x uyumlu olması,
+Python ortamında da CUDA 12/cuDNN 9 uyumlu paketlerin kullanılabilmesi gerekiyor.
